@@ -1,20 +1,4 @@
 
-192011076lahari
-/
-CNS-5166
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-CNS-5166/play fair
-@192011076lahari
-192011076lahari Create play fair
- 1 contributor
-220 lines (216 sloc)  3.82 KB
 #include<stdio.h>
 #include<string.h>
 #include<ctype.h>
