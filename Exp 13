@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int key[3][3] = { { 1, 2, 3 }, 
+                      { 4, 5, 6 }, 
+                      { 7, 8, 9 } }; 
+    int plain[3][1] = { { 1 }, 
+                        { 1 }, 
+                        { 1 } }; 
+    int cipher[3][1] = { { 0 }, 
+                         { 0 }, 
+                         { 0 } }; 
+    int i, j, k; 
+  
+    // encryption 
+    for (i = 0; i < 3; i++) 
+    { 
+        for (j = 0; j < 1; j++) 
+        { 
+            for (k = 0; k < 3; k++) 
+            { 
+                cipher[i][j] += key[i][k] * plain[k][j]; 
+            } 
+        } 
+    } 
+  
+    printf("Cipher Text: \n"); 
+    for (i = 0; i < 3; i++) 
+        printf("%d ", cipher[i][0]); 
+  
+    // decryption 
+    int inv[3][3]; 
+    int d, x, y; 
+    int det = 0; 
+    det = key[0][0] * (key[1][1] * key[2][2] - key[2][1] * key[1][2]) - 
+          key[0][1] * (key[1][0] * key[2][2] - key[1][2] * key[2][0]) + 
+          key[0][2] * (key[1][0] * key[2][1] - key[1][1] * key[2][0]); 
+  
+    int inv_key[3][3]; 
+    for (i = 0; i < 3; i++) 
+    { 
+        for (j = 0; j < 3; j++) 
+        { 
+            x = (key[(j + 1) % 3][(i + 1) % 3] *  
+                 key[(j + 2) % 3][(i + 2) % 3]) - 
+                (key[(j + 1) % 3][(i + 2) % 3] *  
+                 key[(j + 2) % 3][(i + 1) % 3]); 
+            y = det * x; 
+            inv_key[j][i] = y; 
+        } 
+    } 
+  
+    printf("\nInverse of Key: \n"); 
+    for (i = 0; i < 3; i++) 
+    { 
+        for (j = 0; j < 3; j++) 
+            printf("%d ", inv_key[i][j]); 
+        printf("\n"); 
+    } 
+  
+    for (i = 0; i < 3; i++) 
+    { 
+        for (j = 0; j < 1; j++) 
+        { 
+            for (k = 0; k < 3; k++) 
+            { 
+                plain[i][j] += inv_key[i][k] * cipher[k][j]; 
+            } 
+        } 
+    } 
+  
+    printf("\nDecrypted Text: \n"); 
+    for (i = 0; i < 3; i++) 
+        printf("%d ", plain[i][0]); 
+  
+    return 0; 
+}
